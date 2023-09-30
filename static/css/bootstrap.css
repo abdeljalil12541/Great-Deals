@@ -49,6 +49,7 @@ Bootstrap with custom variables
   box-sizing: border-box;
 }
 
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
@@ -479,7 +480,7 @@ mark,
   content: "— ";
 }
 
-.img-fluid {
+.img-fluid{
   max-width: 100%;
   height: auto;
 }

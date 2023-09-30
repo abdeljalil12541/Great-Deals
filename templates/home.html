@@ -9,7 +9,7 @@
 <div class="container">
 
 <div class="intro-banner-wrap">
-	<img src="{% static 'images/banners/1.jpg' %}" class="img-fluid rounded">
+	<img style="width: 100%; height: 350px;" src="{% static 'images/banners/hdbanner.jpg' %}" class="img-fluid rounded">
 </div>
 
 </div> <!-- container //  -->
@@ -34,7 +34,7 @@
 			<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.image.url}}"> </a>
 			<figcaption class="info-wrap">
 				<a href="{{product.get_url}}" class="title">{{product.product_name}}</a>
-				<div class="price mt-1">{{product.price}}</div> <!-- price-wrap.// -->
+				<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->
 			</figcaption>
 		</div>
 	</div> <!-- col.// -->
