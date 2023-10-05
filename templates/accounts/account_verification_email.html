@@ -1,0 +1,21 @@
+{% autoescape off %}
+
+Dear {{user.first_name}},
+
+We are delighted that you have chosen to register with us. Your commitment to joining our community is greatly appreciated.
+
+To complete your registration process and unlock the full benefits of your membership, please take a moment to click on the link below:
+
+[Click here to Confirm Registration](http://{{domain}}{% url 'activate' uidb64=uid token=token%})
+
+By confirming your registration, you'll gain access to a world of opportunities and resources tailored to your needs. We look forward to having you as a valued member of our community.
+
+If you believe this email has reached you in error or if you did not initiate this registration process, kindly disregard this message.
+
+Thank you for choosing us. We're excited to have you on board!
+
+Sincerely,
+
+[GreatDeals]
+
+{% endautoescape %}
