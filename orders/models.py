@@ -13,8 +13,8 @@ class Payment(models.Model):
     status          = models.CharField(max_length=100)
     created_at      = models.DateTimeField(auto_now_add=True)
 
-    def __unicode__(self):
-        self.payment_id
+    def __str__(self):
+        return self.payment_id
 
 
 
@@ -56,7 +56,7 @@ class Order(models.Model):
         return f'{self.address_line_1} {self.address_line_2}'
     
 
-    def __unicode__(self):
+    def __str__(self):
         return self.first_name
     
 
@@ -78,5 +78,5 @@ class OrderProduct(models.Model):
     updated_at      = models.DateTimeField(auto_now=True)
 
 
-    def __unicode__(self):
-        self.product.product_name
+    def __str__(self):
+        return self.product.product_name
