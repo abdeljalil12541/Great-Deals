@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistrationForm, UserForm, UserProfileForm
-from .models import Account, UserProfile
+from .forms import RegistrationForm, UserForm
+from .models import Account
 from django.contrib import messages, auth
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -23,19 +23,30 @@ import requests
 # Create your views here.
 
 
+
+from django.core.files.base import ContentFile
+
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)
+        form = RegistrationForm(request.POST, request.FILES)  # Include request.FILES for file uploads
         if form.is_valid():
-            first_name          = form.cleaned_data['first_name']
-            last_name           = form.cleaned_data['last_name']
-            email               = form.cleaned_data['email']
-            phone_number        = form.cleaned_data['phone_number']
-            password            = form.cleaned_data['password']
-            username            = email.split("@")[0]
-            user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            phone_number = form.cleaned_data['phone_number']
+            password = form.cleaned_data['password']
+            username = email.split("@")[0]
+            profile_picture = form.cleaned_data['profile_picture']  # Retrieve profile picture data
+            user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,username=username,password=password,phone_number=phone_number)
+
+            # Assign profile picture
+            if profile_picture:
+                user.profile_picture.save(profile_picture.name, profile_picture)
+
             user.phone_number = phone_number
             user.save()
+            # Continue with the rest of your registration logic
+            # ...
 
             # USER ACTIVATION
             current_site        = get_current_site(request)
@@ -51,13 +62,15 @@ def register(request):
             send_email.send()
             # messages.success(request, 'Thank you for registering with us. A verification email has been sent to your email address. Please proceed to verify your account.')
             return redirect('/accounts/login/?command=verification&email='+email)
+
     else:
         form = RegistrationForm()
     
     context = {
-        'form' : form
+        'form': form
     }
     return render(request, 'accounts/register.html', context)
+
 
 
 
@@ -171,10 +184,8 @@ def activate(request, uidb64, token):
 def dashboard(request):
     orders       = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
-    userprofile  = UserProfile.objects.get(user_id=request.user.id)
     context      = {
         'orders_count' : orders_count,
-        'userprofile' : userprofile,
     }
     return render(request, 'accounts/dashboard.html', context)
 
@@ -259,24 +270,21 @@ def my_orders(request):
     return  render(request, 'accounts/my_orders.html', context)
 
 
+
+from .forms import UserForm
+
 @login_required(login_url='login')
 def edit_profile(request):
-    userprofile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
-        user_form    = UserForm(request.POST, instance=request.user)
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=userprofile)
-        if user_form.is_valid() and profile_form.is_valid():
+        user_form = UserForm(request.POST, instance=request.user)
+        if user_form.is_valid():
             user_form.save()
-            profile_form.save()
-            messages.success(request, 'You profile has been updated.')
+            messages.success(request, 'Your profile has been updated.')
             return redirect('edit_profile')
     else:
-        user_form    = UserForm(instance=request.user)
-        profile_form = UserProfileForm(instance=userprofile)
+        user_form = UserForm(instance=request.user)
     context = {
-        'user_form' : user_form,
-        'profile_form' : profile_form,
-        'userprofile' : userprofile,
+        'user_form': user_form,
     }
     return render(request, 'accounts/edit_profile.html', context)
 

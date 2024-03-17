@@ -12,7 +12,7 @@
           <article class="card-body">
             {% include "includes/alerts.html" %}
             <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form action="{% url 'register' %}" method="POST">
+            <form action="{% url 'register' %}" method="POST"  enctype="multipart/form-data">
               {% csrf_token %}
 
                     <div class="form-row">
@@ -54,6 +54,12 @@
                       {% if form.non_field_errors %}
                         <p class="text-danger" style="margin-top: -10px;">Password does not match.</p>
                       {% endif %}
+
+                      <div class="form-group">
+                        <label for="exampleFormControlFile1">Example file input</label>
+                        {{form.profile_picture}}
+                      </div>
+
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary btn-block"> Register  </button>
                     </div> <!-- form-group// -->   
