@@ -5,6 +5,7 @@ from .forms import ReviewForm
 from category.models import Category
 from carts.models import CartItem
 from orders.models import OrderProduct, Order, Payment
+from accounts.models import Account
 
 from carts.views import _cart_id
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -66,6 +67,9 @@ def product_detail(request, category_slug, product_slug):
 
     # Get the product gallery
     product_gallery = ProductGallery.objects.filter(product_id=single_product.id)
+
+    # User Pfp
+    pfp = Account.objects.get(email=request.user)
     
     context = {
         'in_cart' : in_cart,
@@ -73,6 +77,7 @@ def product_detail(request, category_slug, product_slug):
         'orderproduct' : orderproduct,
         'reviews' : reviews,
         'product_gallery' : product_gallery,
+        'pfp':pfp
     }
 
     return render (request, 'store/product_detail.html', context)
@@ -108,7 +113,7 @@ def submit_review(request, product_id):
             reviews     = ReviewRating.objects.get(user__id=request.user.id, product__id=product_id)
             form        = ReviewForm(request.POST, instance=reviews)
             form.save()
-            messages.success(request, 'Thank you! Your review has been updated.')
+            messages.success(request, 'Review updated successfully!')
             return redirect(url)
         except ReviewRating.DoesNotExist:
             form                = ReviewForm(request.POST)
@@ -121,5 +126,5 @@ def submit_review(request, product_id):
                 data.product_id = product_id
                 data.user_id    = request.user.id
                 data.save()
-                messages.success(request, 'Thank you! Your review has been submitted')
+                messages.success(request, 'Review submitted. Thank you!')
                 return redirect(url)

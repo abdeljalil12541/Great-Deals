@@ -1,5 +1,5 @@
 from django import forms
-from .models import Account
+from .models import Account, UserProfilee
 
 
 
@@ -56,3 +56,13 @@ class UserForm(forms.ModelForm):
 
 
 
+class UserProfileeForm(forms.ModelForm):
+    profile_picture = forms.ImageField(required=False, error_messages={'Invalid':("Image Fields Only")}, widget=forms.FileInput)
+    class Meta:
+        model = UserProfilee
+        fields = ['address_line1', 'address_line2', 'profile_picture', 'city', 'state', 'country']
+
+    def __init__(self, *args, **kwargs):
+        super(UserProfileeForm, self).__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs['class']='form-control'  

@@ -2,10 +2,10 @@
 {% load static %}
 
 {% block content %}
+    {% include "includes/alerts.html" %}
 
     <!-- ========================= SECTION CONTENT ========================= -->
 <section style="padding-bottom: 160px;" class="section-conten padding-y bg">
-    {% include "includes/alerts.html" %}
     <div class="container">
         <div class="row">
         {% include 'includes/dashboard_sidebar.html' %}
@@ -18,8 +18,8 @@
             
             <div class="card-body">
                 <div class="text-right">
-                    {% if userprofile.profile_picture %}
-                    <img src="{{userprofile.profile_picture.url}}" alt="Profile Picture" width="100" height="100" style="border-radius: 50px; border: 4px solid gainsboro; ">
+                    {% if userprofilee.profile_picture %}
+                    <img src="{{userprofilee.profile_picture.url}}" alt="Profile Picture" width="100" height="100" style="border-radius: 50px; border: 4px solid gainsboro; ">
                     {% else %}
                     <img src="" alt="Profile Picture" width="100" height="100" style="border-radius: 50px; border: 4px solid gainsboro; ">
                     {% endif %}
@@ -51,11 +51,11 @@
                             </div>
                             <div class="form-group">
                                 <label>Address Line 1</label>
-                                {{profile_form.address_line_1}}
+                                {{profile_form.address_line1}}
                             </div>
                             <div class="form-group">
                                 <label>Address Line 2</label>
-                                {{profile_form.address_line_2}}
+                                {{profile_form.address_line2}}
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-4">

@@ -107,3 +107,15 @@ class ProductGallery(models.Model):
     class Meta:
         verbose_name        = 'productgallery'
         verbose_name_plural = 'product gallery'
+
+
+
+
+
+class Banner(models.Model):
+    title = models.CharField(max_length=50)
+    img = models.ImageField(upload_to='banners', null=False)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title

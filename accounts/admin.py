@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Account
+from .models import Account, UserProfilee
 from django.utils.html import format_html
 
 # Register your models here.
@@ -17,3 +17,9 @@ class AccountAdmin(UserAdmin):
 
 
 admin.site.register(Account, AccountAdmin)
+
+
+class UserProfileeAdmin(admin.ModelAdmin):
+	list_display = ['user','city','country']
+
+admin.site.register(UserProfilee, UserProfileeAdmin)

@@ -1,11 +1,43 @@
 {% if messages %}
-    {% for message in messages %}
-    <div id="message" class="container">
-        <div{% if message.tags %} class="alert alert-{{ message.tags }}"{% endif %} role="alert">
-            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span></button>
-            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error:{% endif %}
-            {{ message }}
-        </div>
-    </div>
+    {% for msg in messages %}
+            <div  id="toast" style="z-index:9999 ;" class="bg-{{msg.tags}} mt-3">
+              <p class="text-white text-center">{{ msg }}<span><i class="fa fa-close toast-btn"></i></span></p>
+            </div>
+
+            <style>
+              .bg-success{
+              	background-color: #198754 !important;
+              }
+              .bg-error{
+                background-color: #d4403b;
+              }
+            </style>
+            
+            
     {% endfor %}
 {% endif %}
+
+<style>
+  #toast{
+    border-radius: 2px; width: 380px; height: 50px; 
+    text-align: center; 
+    padding-bottom: 15px;
+    padding-top: 12px;
+    font-size: 18px; position: fixed; bottom: 5px; right: 8px;
+    margin-right: 5px;
+  }
+
+  .toast-btn{
+    cursor: pointer; padding-left: 18px; font-size: 19px;
+  }
+</style>
+
+<script>
+  setTimeout(function() {
+    $("#toast").hide();
+  }, 5000);
+
+  $(".toast-btn").click(function(){
+    $("#toast").hide();
+  })
+</script>

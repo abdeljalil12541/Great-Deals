@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import RegistrationForm, UserForm
-from .models import Account
+from .forms import RegistrationForm, UserForm, UserProfileeForm
+from .models import Account, UserProfilee
 from django.contrib import messages, auth
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
@@ -38,7 +38,7 @@ def register(request):
             username = email.split("@")[0]
             profile_picture = form.cleaned_data['profile_picture']  # Retrieve profile picture data
             user = Account.objects.create_user(first_name=first_name,last_name=last_name,email=email,username=username,password=password,phone_number=phone_number)
-
+            user_profile = UserProfilee.objects.create(user=user, profile_picture=profile_picture)
             # Assign profile picture
             if profile_picture:
                 user.profile_picture.save(profile_picture.name, profile_picture)
@@ -131,7 +131,7 @@ def login(request):
             except:
                 pass
             auth.login(request, user)
-            messages.success(request, "You have successfully accessed your account.")
+            messages.success(request, "You've successfully logged in.")
             url = request.META.get('HTTP_REFERER')
             try:
                 query = requests.utils.urlparse(url).query
@@ -157,7 +157,7 @@ def login(request):
 @login_required(login_url = 'login') 
 def logout(request):
     auth.logout(request)
-    messages.success(request, "You are successfully logged out.")
+    messages.success(request, "You've successfully logged out.")
     return redirect('login')
 
 
@@ -210,7 +210,7 @@ def forgotPassword(request):
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
 
-            messages.success(request, 'Password email has been sent to your email address.')
+            messages.success(request, 'Password email sent to your inbox.')
             return redirect('login')
         else:
             messages.error(request, 'Account does not exist!')
@@ -275,16 +275,31 @@ from .forms import UserForm
 
 @login_required(login_url='login')
 def edit_profile(request):
+    userprofilee = get_object_or_404(UserProfilee, user=request.user)
+    user_pfp = get_object_or_404(Account, email=request.user)
+    
     if request.method == 'POST':
-        user_form = UserForm(request.POST, instance=request.user)
-        if user_form.is_valid():
+        user_form = UserForm(request.POST, request.FILES, instance=request.user)
+        profile_form = UserProfileeForm(request.POST, request.FILES, instance=userprofilee)
+        
+        if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
+            profile_form.save()
+
+            # Update profile_picture in Account model
+            user_pfp.profile_picture = userprofilee.profile_picture
+            user_pfp.save()
+
             messages.success(request, 'Your profile has been updated.')
             return redirect('edit_profile')
     else:
         user_form = UserForm(instance=request.user)
+        profile_form = UserProfileeForm(instance=userprofilee)
+    
     context = {
         'user_form': user_form,
+        'profile_form': profile_form,
+        'userprofilee': userprofilee
     }
     return render(request, 'accounts/edit_profile.html', context)
 
