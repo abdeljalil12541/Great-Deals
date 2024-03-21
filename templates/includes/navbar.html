@@ -9,16 +9,33 @@
       <div class="collapse navbar-collapse" id="navbarTop4">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                 <a href="#" class="nav-link">   English </a>
+                <a class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Language
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item bg-white" id="google_translate_element" onclick="event.stopPropagation();"></a>
+                  <!-- Add more options here -->
+                </div>
+              </li>
+                 <div id="google_translate_element"></div> 
+                 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
                 
-            </li>
+                 <script>
+                     function googleTranslateElementInit(){
+                        new google.translate.TranslateElement(
+                            {pageLanguage: 'en'},
+                            'google_translate_element'
+                            );
+                        };
+                 </script>
+
             <li class="nav-item dropdown">
-                <a href="#" class="nav-link"> USD </a>
+                <a class="nav-link" style="color: gray;"> USD </a>
             </li>
         </ul>
         <ul class="navbar-nav">
-            <li><a href="#" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
-            <li><a href="#" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
+            <li><a href="mailto:lbalshop641@gmail.com" class="nav-link"> <i class="fa fa-envelope"></i> Email </a></li>
+            <li><a href="tel:+212 617-374296" class="nav-link"> <i class="fa fa-phone"></i> Call us </a></li>
         </ul> <!-- list-inline //  -->
       </div> <!-- navbar-collapse .// -->
     </div> <!-- container //  -->
@@ -29,7 +46,7 @@
     <div class="row align-items-center">
         <div class="col-lg-2 col-md-3 col-6">
             <a href="{% url "home" %}" class="brand-wrap" >
-                <img class="logo" src="{% static './images/logo.png' %}">
+                <img class="logo" src="{% static './cash.png' %}">
             </a> <!-- brand-wrap.// -->
         </div>
         <div class="col-lg col-sm col-md col-6 flex-grow-0">

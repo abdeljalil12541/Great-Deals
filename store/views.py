@@ -125,6 +125,7 @@ def submit_review(request, product_id):
                 data.ip         = request.META.get('REMOTE_ADDR')
                 data.product_id = product_id
                 data.user_id    = request.user.id
+                data.profile_picture = request.user.profile_picture
                 data.save()
                 messages.success(request, 'Review submitted. Thank you!')
                 return redirect(url)

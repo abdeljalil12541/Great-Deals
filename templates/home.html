@@ -50,7 +50,7 @@
 	{% for product in products %}
 	<div class="col-md-3">
 		<div class="card card-product-grid">
-			<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.image.url}}"> </a>
+			<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.image.url}}" style="padding-top: 5px"> </a>
 			<figcaption class="info-wrap">
 				<a href="{{product.get_url}}" class="title">{{product.product_name}}</a>
 				<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->

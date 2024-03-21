@@ -60,8 +60,8 @@ def register(request):
             to_email = email
             send_email = EmailMessage(mail_subject, message, to=[to_email])
             send_email.send()
-            # messages.success(request, 'Thank you for registering with us. A verification email has been sent to your email address. Please proceed to verify your account.')
-            return redirect('/accounts/login/?command=verification&email='+email)
+            messages.success(request, 'Registration done! Verify your email.')
+            return redirect('login')
 
     else:
         form = RegistrationForm()
@@ -171,7 +171,7 @@ def activate(request, uidb64, token):
     if user is not None and default_token_generator.check_token(user, token):
         user.is_active = True
         user.save()
-        messages.success(request, 'Congratulations, your account has been successfully activated.')
+        messages.success(request, "Congrats! Your account's activated.")
         return redirect('login')
     else:
         messages.error(request, 'Invalid activation link')
@@ -279,7 +279,7 @@ def edit_profile(request):
     user_pfp = get_object_or_404(Account, email=request.user)
     
     if request.method == 'POST':
-        user_form = UserForm(request.POST, request.FILES, instance=request.user)
+        user_form = UserForm(request.POST, request.FILES, instance=user_pfp)
         profile_form = UserProfileeForm(request.POST, request.FILES, instance=userprofilee)
         
         if user_form.is_valid() and profile_form.is_valid():

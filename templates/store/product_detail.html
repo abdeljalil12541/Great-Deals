@@ -10,14 +10,14 @@
                 <aside class="col-md-6">
                     <article class="gallery-wrap">
                         <div class="img-big-wrap mainImage">
-                            <center><img src="{{ single_product.image.url }}"></center>
+                            <center><img src="{{ single_product.image.url }}" style="padding-top: 20px"></center>
                         </div> <!-- img-big-wrap.// -->
                     </article> <!-- gallery-wrap .end// -->
                     <ul class="thumb">
                         <li>
-                            <a href="{{ single_product.image.url }}" target="mainImage"><img src="{{ single_product.image.url }}" alt="Product Image"></a>
+                            <a href="{{ single_product.image.url }}" target="mainImage"><img src="{{ single_product.image.url }}" style="border: 1px solid gray; margin-right: 7px; padding: 8px" alt="Product Image"></a>
                             {% for i in product_gallery %}
-                            <a href="{{i.image.url}}" target="mainImage"><img src="{{i.image.url}}" alt="Product Image"></a>
+                            <a  href="{{i.image.url}}" target="mainImage"><img src="{{i.image.url}}" style="border: 1px solid gray; margin-right: 7px; padding: 8px" alt="Product Image"></a>
                             {% endfor %}
                         </li>
                     </ul>
@@ -148,7 +148,7 @@
             {% for review in reviews %}
                 <article class="box mb-3">
                     <div class="icontext w-100">
-                        <img src="{{pfp.profile_picture.url}}" class="img-xs icon rounded-circle">
+                        <img src="{{review.profile_picture.url}}" class="img-xs icon rounded-circle" enctype="multipart/form-data">
                         <div class="text">
                             <span class="date text-muted float-md-right">{{review.updated_at}}</span>
                             <h6 class="mb-1">{{review.user.full_name}}</h6>
