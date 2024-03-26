@@ -21,10 +21,10 @@ class Payment(models.Model):
 
 class Order(models.Model):
     STATUS =  (
-        ('New' , 'New'),
-        ('Accepted' , 'Accepted'),
-        ('Completed' , 'Completed'),
-        ('Cancelled' , 'Cancelled'),
+        ('on_delivery', 'On Delivery'),
+        ('received', 'Received'),
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled'),
     )
 
     user            = models.ForeignKey(Account, on_delete=models.SET_NULL, null=True)
@@ -42,7 +42,7 @@ class Order(models.Model):
     order_note      = models.CharField(max_length=100, blank=True)
     order_total     = models.FloatField()
     tax             = models.FloatField()
-    status          = models.CharField(max_length=10, choices=STATUS, default='New')
+    status          = models.CharField(max_length=150, choices=STATUS, default='pending')
     ip              = models.CharField(blank=True, max_length=20)
     is_ordered      = models.BooleanField(default=False)
     created_at      = models.DateTimeField(auto_now_add=True)
@@ -86,6 +86,15 @@ class OrderProduct(models.Model):
 
 
 class CashOnDelivery(models.Model):
+
+    CHOICES = (
+        ('on_delivery', 'On Delivery'),
+        ('received', 'Received'),
+        ('pending', 'Pending'),
+        ('cancelled', 'Cancelled'),
+    )
+
+    is_recievedd = models.CharField(choices=CHOICES, null=True, max_length=150, default='pending')
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=150)
     full_address = models.CharField(max_length=150, null=True)
@@ -96,5 +105,9 @@ class CashOnDelivery(models.Model):
     order_note = models.TextField(blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True, null=True)
 
+
     class Meta:
         verbose_name_plural = 'Cash On Delivery'
+
+    def __decode__(self):
+        return self.user

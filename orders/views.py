@@ -234,6 +234,10 @@ def cod_confirm(request):
             order_note = order_note,
         )
 
-        return redirect('dashboard')
+        return redirect('cod_completed')
     else:
         return redirect('dashboard')
+
+
+def cod_completed(request):
+    return render(request, 'orders/cod_completed.html')
