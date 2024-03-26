@@ -5,7 +5,7 @@ from django.contrib import messages, auth
 from django.contrib.auth import logout, login
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from orders.models import Order, OrderProduct
+from orders.models import Order, OrderProduct, CashOnDelivery
 
 
 # varification email
@@ -182,8 +182,11 @@ def activate(request, uidb64, token):
 
 @login_required(login_url='login')
 def dashboard(request):
+    current_count = CashOnDelivery.objects.filter(user=request.user).count()
+    current_count += 1
     orders       = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
+    orders_count += current_count
     context      = {
         'orders_count' : orders_count,
     }
@@ -264,8 +267,10 @@ def resetPassword(request):
 @login_required(login_url='login')
 def my_orders(request):
     orders      = Order.objects.filter(user=request.user, is_ordered=True).order_by('-created_at')
+    cod_orders  = CashOnDelivery.objects.filter(user=request.user)
     context     = {
         'orders' : orders,
+        'cod_orders' : cod_orders,
     }
     return  render(request, 'accounts/my_orders.html', context)
 

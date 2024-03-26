@@ -2,13 +2,14 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from accounts.models import Account
 from carts.models import Cart, CartItem
-from .models import Payment, Order, OrderProduct
+from .models import Payment, Order, OrderProduct, CashOnDelivery
 from .forms import OrderForm
 from store.models import Product
 import datetime
 import json
 from django.core.mail import EmailMessage
 from django.template.loader import render_to_string
+from django.contrib import messages
 
 # Create your views here.
 
@@ -180,3 +181,59 @@ def order_complete(request):
         return render(request, 'orders/order_complete.html', context)
     except (Payment.DoesNotExist, Order.DoesNotExist):
         return redirect('home')
+
+
+
+import json
+
+def cod_confirm(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        
+        # Extract data from JSON
+        full_name = data.get("fullName")
+        full_address = data.get("fullAddress")
+        city_state = data.get("cityState")
+        country = data.get("country")
+        email = data.get("email")
+        phone = data.get("phone")
+        order_note = data.get("orderNote")
+
+        # Construct message
+        message = render_to_string('orders/cod_new_order.html', {
+            'user': request.user,
+            'order': {
+                'full_name': full_name,
+                'full_address': full_address,
+                'city_state': city_state,
+                'country': country,
+                'email': email,
+                'phone': phone,
+                'order_note': order_note,
+                # You may need to include order_number if it's available
+            },
+        })
+
+        # Send email
+        mail_subject = 'New Order Confirmation'
+        to_email = ['lbalshop641@gmail.com']
+        send_email = EmailMessage(mail_subject, message, to=to_email)
+        send_email.send()
+
+        # Clear Cart
+        CartItem.objects.filter(user=request.user).delete()
+
+        CashOnDelivery.objects.create(
+            user = request.user,
+            full_name = full_name,
+            full_address = full_address,
+            city_state = city_state,
+            country = country,
+            email = email,
+            phone = phone,
+            order_note = order_note,
+        )
+
+        return redirect('dashboard')
+    else:
+        return redirect('dashboard')

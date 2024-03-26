@@ -43,8 +43,33 @@
                           </table>
                     </div>
                 </div> <!-- row.// -->
+                <hr class="border-primary">
+                <strong class="d-inline-block mr-3 mb-3">Cod Orders History</strong>
+
+                <table class="table table-hover">
+                            <thead>
+                              <tr>
+                                <th scope="col">Order #</th>
+                                <th scope="col">Billing  Name</th>
+                                <th scope="col">Phone</th>
+                                <th scope="col">Order Total</th>
+                                <th scope="col" style="padding-left: 70px;">Date</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                            {% for cod_order in cod_orders %}
+                              <tr>
+                                <th scope="row"><a href="#" class="pl-3">#{{cod_order.id}}</a></th>
+                                <td>{{cod_order.full_name}}</td>
+                                <td>{{cod_order.phone}}</td>
+                                <td>{{cod_order.country}}</td>
+                                <td>{{cod_order.date}}</td>
+                              </tr>
+                            {% endfor %}
+                            </tbody>
+                          </table>
             </div> <!-- card-body .// -->
-            </article> <!-- order-group.// --> 
+            </article>
         </main>
     </div> <!-- row.// -->
     </div>

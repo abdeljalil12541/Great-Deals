@@ -1,0 +1,18 @@
+{% autoescape off %}
+
+Hi {{ user.first_name }},
+
+There is a new order placed with the following details:
+
+Full Name: {{ order.full_name }}
+Full Address: {{ order.full_address }}
+City, State: {{ order.city_state }}
+Country: {{ order.country }}
+Email: {{ order.email }}
+Phone: {{ order.phone }}
+
+{% if order.order_note %}
+Order Note: {{ order.order_note }}
+{% endif %}
+
+{% endautoescape %}

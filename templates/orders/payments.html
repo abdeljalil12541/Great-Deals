@@ -3,11 +3,11 @@
 
 
 {% block content %}
+    {% include "includes/alerts.html" %}
 
 
 <section class="section-content padding-y bg">
     <div class="container">
-
         <!-- ============================ COMPONENT 1 ================================= -->
         <h4 class="ml-4 mb-4">Review Your Order and Make Payment</h4>
 
@@ -106,7 +106,7 @@
                         </dl>
                         <dl class="dlist-align">
                             <dt>Grand Total:</dt>
-                            <dd class="text-right text-dark b"><strong>${{grand_total}}</strong></dd>
+                            <dd class="text-right text-dark b"><strong id="grand_total">${{grand_total}}</strong></dd>
                         </dl>
                         <hr>
                         <p class="text-center mb-3">
@@ -114,10 +114,10 @@
                         </p>
                         <div id="paypal-button-container"></div>
                         <hr>
-                        <div class="bg-white border  rounded">
-                            Cash On Delivery
-                            <img src="{% static './images/l.png' %}">
-                        </div>
+                        <a  data-toggle="modal" data-target="#exampleModal" style="color: black; opacity: 80%;" href="/"><div class="bg-white border text-center COD" style="padding: 5px 5px; border-radius: 5px; border:1px solid #87CEEB !important;">
+                            <span class="CodP">Cash On Delivery</span>
+                            <img src="{% static './images/cash.png' %}" style="width: 30px;">
+                        </div></a>
                     </div> <!-- card-body.// -->
                 </div> <!-- card.// -->
 
@@ -128,38 +128,392 @@
         <!-- ============================ COMPONENT 1 END .// ================================= -->
 
     </div> <!-- container .//  -->
+
+
+        <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Method: <span>Cash On Delivery</span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="modalBody" class="modal-body">
+        
+        <div class="row">
+            <!-- card.// -->
+        <div class="card col-6" style="margin-top: 5px; margin-left: 25px">
+          <h5 class="card-header">Review Products</h5>
+          <div class="card-body">
+            <table class="table table-borderless table-shopping-cart">
+              <thead class="text-muted">
+                <tr class="small text-uppercase">
+                  <th scope="col">Product</th>
+                  <th scope="col" width="80">Quantity</th>
+                  <th scope="col" width="80">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Loop through cart items -->
+                {% for cart_item in cart_items %}
+                <tr>
+                  <td>
+                    <figure class="itemside align-items-center">
+                      <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
+                      <figcaption class="info">
+                        <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
+                        <p class="text-muted small">
+                          {% if cart_item.variations.all %}
+                            {% for item in cart_item.variations.all %}
+                              {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
+                            {% endfor %}
+                          {% endif %}
+                        </p>
+                      </figcaption>
+                    </figure>
+                  </td>
+                  <td>
+                    <label for="">{{ cart_item.quantity }}</label>
+                  </td>
+                  <td>
+                    <div class="price-wrap">
+                      <var class="price">${{ cart_item.sub_total }}</var>
+                      <small class="text-muted"> ${{ cart_item.product.price }} each </small>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+                <!-- End loop -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- end card.// -->
+
+
+        <!-- card.// -->
+        <div class="card col-5" style="margin-left: 25px">
+                    <h5 class="card-header">Billing Address</h5>
+                    <div class="card-body">
+
+                        <p class="card-text mb-0" id="fullName">{{order.full_name}}</p>
+                        <p class="card-text mb-0" id="fullAddress">{{order.full_address}}</p>
+                        <p class="card-text mb-0" id="cityState">{{order.city}}, {{order.state}}</p>
+                        <p class="card-text mb-0" id="country">{{order.country}}</p>
+                        <p class="card-text mb-0" id="email">{{order.email}}</p>
+                        <p class="card-text mb-0" id="phone">{{order.phone}}</p>
+                        {% if order.order_note %}
+                        <b>Order Note:</b> <span id="orderNote">{{order.order_note}}</span>
+                        {% endif %}
+
+                    </div>
+        </div>
+        <!-- end card.// -->
+        </div>
+
+      </div>
+      <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          <div  id="loadingSpinner" class="loadingio-spinner-rolling-5nthc5f2rs2"><div class="ldio-gvme6qetmpv">
+          <div></div>
+          </div></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="CloseOrderBtn">Close</button>
+        <button type="button" class="btn btn-primary" id="confirmOrderBtn">Confirm Your Order</button>
+        <div class="center-container" id="successMark">
+          <!-- Checkmark -->
+          <div class="checkmark"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<style type="text/css">
+
+/* Centering container */
+  #successMark {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+
+  /* Styling for the checkmark */
+  .checkmark {
+    width: 35px; /* Adjust size as needed */
+    height: 35px; /* Adjust size as needed */
+    border-radius: 50%;
+    border: 4px solid #27ae60; /* Green border color */
+    position: relative;
+  }
+
+  /* Styling for the checkmark shape */
+  .checkmark:after {
+    content: '';
+    position: absolute;
+    top: 25%;
+    left: 37%;
+    width: 25%;
+    height: 50%;
+    border: solid #27ae60; /* Green border color */
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+
+
+
+@keyframes ldio-gvme6qetmpv {
+  0% { transform: translate(-50%,-50%) rotate(0deg); }
+  100% { transform: translate(-50%,-50%) rotate(360deg); }
+}
+.ldio-gvme6qetmpv div {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  border: 4px solid #0d6efd;
+  border-top-color: transparent;
+  border-radius: 50%;
+}
+.ldio-gvme6qetmpv div {
+  animation: ldio-gvme6qetmpv 1s linear infinite;
+  top: 50%;
+  left: 51%
+}
+.loadingio-spinner-rolling-5nthc5f2rs2 {
+  width: 200px;
+  height: 200px;
+  display: inline-block;
+  overflow: hidden;
+}
+.ldio-gvme6qetmpv {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-gvme6qetmpv div { box-sizing: content-box; }
+/* generated by https://loading.io/ */
+</style>
+
 </section>
 <!-- ========================= SECTION CONTENT END// ========================= -->
 <!-- HTML -->
 
-<!-- JavaScript -->
-<script>
-    // Function to handle the click event of the PayPal button
-    function handlePayPalButtonClick(event) {
-        // Prevent the default action, which opens the new window
-        event.preventDefault();
-        
-        // Perform any custom actions or redirect the user as needed
-        // For example, you might trigger a modal or custom checkout process
-        // Here, I'm just logging a message to the console
-        console.log("PayPal button clicked. Custom action can be implemented here.");
+<style>
+    .COD:hover{
+        opacity: 80% !important;
+        cursor: pointer !important;
+        transition: .5s !important;
+    }
+    .CodP{
+        color: #1bade7;
+        padding-right: 5px;
+        font-weight: 400 !important;
     }
 
+    .blur-dd {
+      filter: blur(4px); /* Apply blur effect to the modal body content */
+    }
+
+    #loadingSpinner {
+      display: none;
+      position: fixed;
+      z-index: 99999;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+</style>
+
+<!-- JavaScript -->
+<script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if(document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for(let i=0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+
+                if(cookie.substring(0, name.length + 1) === (name + '=')) { // fixed substring here
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+
+    var csrftoken = getCookie('csrftoken');
+    var amount = "{{ grand_total }}";
+    var url = "{% url 'payments' %}";
+    var orderID = "{{order.order_number}}";
+    var redirect_url = "{% url 'order_complete' %}";
     // Render the PayPal button into #paypal-button-container
     paypal.Buttons({
+
         style: {
             color: 'blue',
             shape: 'rect',
             label: 'pay',
             height: 40
         },
-        // Other PayPal button configuration options
-        // ...
-    }).render('#paypal-button-container');
 
-    // Add a click event listener to the PayPal button
-    document.getElementById('paypal-button-container').addEventListener('click', handlePayPalButtonClick);
+        // Call your server to set up the transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: amount,
+                    }
+                }]
+            });
+        },
+
+        // Call your server to finalize the transaction
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details){
+                sendData();
+                function sendData(){
+                    fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "X-CSRFToken": csrftoken,
+                        },
+                        body: JSON.stringify({
+                            orderID: orderID,
+                            transID: details.id,
+                            payment_method: 'Paypal',
+                            status: details.status,
+                        }),
+                    })
+                    .then((response) => response.json()) // fixed response handling here
+                    .then((data) => {
+                        window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
+                    });
+                }
+            });
+        }
+
+    }).render('#paypal-button-container');
 </script>
+
+
+<script>
+    // Add a click event listener to the PayPal button
+
+    // When confirm order button is clicked
+    document.getElementById("confirmOrderBtn").addEventListener("click", function() {
+        console.log("Confirm Order button clicked.");
+
+        var fullName = document.getElementById("fullName").textContent;
+        var fullAddress = document.getElementById("fullAddress").textContent;
+        var cityState = document.getElementById("cityState").textContent;
+        var country = document.getElementById("country").textContent;
+        var country = document.getElementById("grand_total").textContent;
+        var email = document.getElementById("email").textContent;
+        var phone = document.getElementById("phone").textContent;
+        var orderNote = document.getElementById("orderNote") ? document.getElementById("orderNote").textContent : '';
+
+        console.log("Data retrieved from HTML elements:");
+        console.log("Full Name:", fullName);
+        console.log("Full Address:", fullAddress);
+        console.log("City State:", cityState);
+        console.log("Country:", country);
+        console.log("Email:", email);
+        console.log("Phone:", phone);
+        console.log("Order Note:", orderNote);
+        console.log("Grand Total:", grand_total);
+
+        var data = {
+            fullName: fullName,
+            fullAddress: fullAddress,
+            cityState: cityState,
+            country: country,
+            email: email,
+            phone: phone,
+            grand_total: grand_total,
+            orderNote: orderNote
+        };
+
+        console.log("Data to be sent to backend:", data);
+
+        // Send data to backend
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "{% url 'cod_confirm' %}", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+
+        // Get CSRF token from cookie
+        var csrftoken = getCookie('csrftoken');
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                console.log("Response received from backend.");
+                console.log("Status:", xhr.status);
+                console.log("Response:", xhr.responseText);
+
+                if (xhr.status === 200) {
+                    // alert("Order confirmed successfully!");
+                    // window.location.href = "{% url 'cod_confirm' %}"
+                    // Hide the loading spinner and display the success mark
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    document.getElementById('successMark').style.display = 'block';
+
+                    // Trigger a click event on the close button to close the modal
+                    setTimeout(function() {
+                        window.location.href = "{% url 'dashboard' %}";
+                    }, 1000);
+                } else {
+                    alert("Error confirming order. Please try again later.");
+                }
+            }
+        };
+
+        // Show loading spinner
+        document.getElementById('loadingSpinner').style.display = 'block';
+        document.getElementById('modalBody').style.filter= 'blur(4px)';
+
+        xhr.send(JSON.stringify(data));
+    });
+
+    // Function to get CSRF token from cookies
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+    document.getElementById('CloseOrderBtn').addEventListener('click', function(){
+        document.getElementById('modalBody').style.filter= 'blur(0px)';
+        document.getElementById('loadingSpinner').style.display = 'none';
+        document.getElementById('successMark').style.display = 'none'
+
+    })
+</script>
+
 
 
 {% endblock  %}

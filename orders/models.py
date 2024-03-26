@@ -65,6 +65,7 @@ class Order(models.Model):
 
 
 
+
 class OrderProduct(models.Model):
     order           = models.ForeignKey(Order, on_delete=models.CASCADE)
     payment         = models.ForeignKey(Payment, on_delete=models.SET_NULL, blank=True, null=True)
@@ -80,3 +81,20 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return self.product.product_name
+
+
+
+
+class CashOnDelivery(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    full_name = models.CharField(max_length=150)
+    full_address = models.CharField(max_length=150, null=True)
+    city_state = models.CharField(max_length=150, null=True)
+    country = models.CharField(max_length=150, null=True)
+    email = models.CharField(max_length=150, null=True)
+    phone = models.CharField(max_length=150, null=True)
+    order_note = models.TextField(blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True)
+
+    class Meta:
+        verbose_name_plural = 'Cash On Delivery'
