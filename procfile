@@ -1,1 +1,1 @@
-web gunicorn e-commerce-website.wsgi:application --log-file -
+web: gunicorn GreatDeals.wsgi --log-file -
