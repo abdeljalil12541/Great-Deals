@@ -136,16 +136,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR /'static'
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
-    'GreatDeals/static',
+    BASE_DIR / 'GreatDeals' / 'static',
 ]
 
 
-# media files configuration
-
-MADIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR /'media'
+# Media files configuration
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # MEDIA_ROOT = BASE_DIR, 'media'
 # MEDIA_URL = '/media/'
@@ -167,7 +166,7 @@ MESSAGE_TAGS = {
 
 # SMTP configuration
 EMAIL_HOST          = 'smtp.gmail.com'
-EMAIL_PORT          = '587'
+EMAIL_PORT          = 587
 EMAIL_HOST_USER     = 'lbalshop641@gmail.com'
 EMAIL_HOST_PASSWORD = 'wdgn ydeo kvqa wfep'
 EMAIL_USE_TLS       = True
