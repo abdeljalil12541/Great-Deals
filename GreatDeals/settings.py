@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 SECRET_KEY = 'ivl=vk)y0zu2tl@e2y)afe58#52wzfza06#8t3t-xn6d0++@-q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'lbal-shop-614bd7cbb3bf.herokuapp.com']
 
@@ -166,8 +166,8 @@ MESSAGE_TAGS = {
 
 
 # SMTP configuration
-EMAIL_HOST          = config('EMAIL_HOST')
-EMAIL_PORT          = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER     = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS       = config('EMAIL_USE_TLS', cast=bool) 
+EMAIL_HOST          = 'smtp.gmail.com'
+EMAIL_PORT          = '587'
+EMAIL_HOST_USER     = 'lbalshop641@gmail.com'
+EMAIL_HOST_PASSWORD = 'wdgn ydeo kvqa wfep'
+EMAIL_USE_TLS       = True
