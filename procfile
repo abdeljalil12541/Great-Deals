@@ -1,1 +1,1 @@
-web: gunicorn "e-commerce_debsite.wsgi" --log-file -
+web: gunicorn "e-commerce debsite.wsgi" --log-file -
