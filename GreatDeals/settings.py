@@ -93,6 +93,7 @@ AUTH_USER_MODEL = 'accounts.account'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+import dj_database_url
 
 DATABASES = {
     # 'default': {
