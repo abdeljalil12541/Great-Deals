@@ -142,7 +142,6 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     BASE_DIR / 'GreatDeals' / 'static',
 ]
-django_heroku.settings(locals())
 
 
 # Media files configuration
@@ -173,3 +172,5 @@ EMAIL_PORT          = 587
 EMAIL_HOST_USER     = 'lbalshop641@gmail.com'
 EMAIL_HOST_PASSWORD = 'wdgn ydeo kvqa wfep'
 EMAIL_USE_TLS       = True
+
+django_heroku.settings(locals())
