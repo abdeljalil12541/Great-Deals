@@ -101,14 +101,16 @@ DATABASES = {
     # }
 
 
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': '127.0.0.1',  # Replace with the hostname or IP address of your PostgreSQL server
-        'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
-    }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'postgres',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'admin',
+    #     'HOST': '127.0.0.1',  # Replace with the hostname or IP address of your PostgreSQL server
+    #     'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
+    # }
+
+    'default': dj_database_url.config(default='postgres://localhost')
 }
 
 
