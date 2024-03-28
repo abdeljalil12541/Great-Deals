@@ -28,8 +28,8 @@ SECRET_KEY = 'ivl=vk)y0zu2tl@e2y)afe58#52wzfza06#8t3t-xn6d0++@-q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+ALLOWED_HOSTS = ['*']  # Allow all hosts for now, adjust as needed in production
 
-ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,13 +93,17 @@ AUTH_USER_MODEL = 'accounts.account'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-import dj_database_url
 
-DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # }
+ON_HEROKU = os.getenv('ON_HEROKU', False)
+
+if ON_HEROKU:
+    DATABASE_URL = os.getenv('DATABASE_URL')
+else:
+    # Use SQLite for local development
+    DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
+
+# Configure the default database using dj_database_url
+DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 
     # 'default': {
@@ -111,8 +115,6 @@ DATABASES = {
     #     'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
     # }
 
-    'default': dj_database_url.config(default='postgres://127.0.0.1')
-}
 
 
 # Password validation
@@ -192,9 +194,5 @@ EMAIL_PORT          = 587
 EMAIL_HOST_USER     = 'lbalshop641@gmail.com'
 EMAIL_HOST_PASSWORD = 'wdgn ydeo kvqa wfep'
 EMAIL_USE_TLS       = True
-
-if 'DATABASE_URL' in os.environ:
-    import dj_database_url
-    DATABASES = {'default': dj_database_url.config()}
 
 django_heroku.settings(locals())
