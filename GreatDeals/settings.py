@@ -111,7 +111,7 @@ DATABASES = {
     #     'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
     # }
 
-    'default': dj_database_url.config(default='postgres://localhost')
+    'default': dj_database_url.config(default='postgres://127.0.0.1')
 }
 
 
