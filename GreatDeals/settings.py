@@ -51,8 +51,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -95,16 +95,16 @@ AUTH_USER_MODEL = 'accounts.account'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-ON_HEROKU = os.getenv('ON_HEROKU', False)
-
-if ON_HEROKU:
-    DATABASE_URL = os.getenv('DATABASE_URL')
-else:
-    # Use SQLite for local development
-    DATABASE_URL = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-
-# Configure the default database using dj_database_url
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'd7pm1i5ksbnvif',
+        'USER': 'ueaqbgbdkcl5j4',
+        'PASSWORD': 'p7bea4aa97c0acdb3c131890e713c2895ca433c15c0d29a2076c9f18751146e0f',
+        'HOST': 'c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',  # Replace with the hostname or IP address of your PostgreSQL server
+        'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
+    }
+}
 
 
 # Password validation
@@ -158,7 +158,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Media files configuration
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 
 # MEDIA_ROOT = BASE_DIR, 'media'
 # MEDIA_URL = '/media/'
