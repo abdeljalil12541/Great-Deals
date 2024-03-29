@@ -1,6 +1,7 @@
 {% load static %}
 
-<header class="section-header">
+{% comment %} Desktop version {% endcomment %}
+<header class="section-header desktop-version">
     <nav class="navbar p-md-0 navbar-expand-sm navbar-light border-bottom">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +67,7 @@
         <div class="col-lg  col-md-6 col-sm-12 col">
             <form action="{% url 'search' %}" class="search" method="GET">
                 <div class="input-group w-100">
-                    <input type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
+                    <input required type="text" class="form-control" style="width:60%;" placeholder="Search" name="keyword">
                     
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="submit">
@@ -104,9 +105,120 @@
     </div> <!-- row.// -->
         </div> <!-- container.// -->
     </section> <!-- header-main .// -->
-    
-    
-    
-    
-    </header> <!-- section-header.// -->
-    
+</header>
+
+{% comment %} Mobile version {% endcomment %}
+
+<header class="section-header mobile-version">
+    <nav class="navbar p-md-0 navbar-expand-md navbar-light border-bottom">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">
+                <img class="logo" src="{% static './images/logo.png' %}">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTop4">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item bg-white" id="google_translate_element"
+                                onclick="event.stopPropagation();"></a>
+                            <!-- Add more options here -->
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" style="color: gray; cursor: default;"> USD </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-md-auto">
+                    <li class="nav-item">
+                        {% if user.id is None %}
+                        <a class="nav-link" href="{% url 'login' %}">Sign in</a>
+                        {% else %}
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Welcome <strong>{{user.first_name}}</strong> !
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="userDropdown">
+                                <a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a>
+                                <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'cart' %}" class="nav-link">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span class="badge badge-pill badge-danger notify">{{cart_count}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="header-main border-bottom">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-3 col-xl-2">
+                <div class="category-wrap dropdown d-inline-block">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-bars"></i> All category
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="{% url 'store' %}"><b>All Products</b> </a>
+                        {% for category in links|slice:'' %}
+                        <a class="dropdown-item" href="{{ category.get_url }}"> {{ category.category_name }} </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-9 col-xl-10">
+                <div class="row">
+                    <div class="col-7">
+                        <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0 mr-2">
+                            <div class="input-group">
+                                <input required class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="submit">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+</header>
+
+<style>
+    @media (min-width: 768px) {
+    .desktop-version {
+        display: block;
+    }
+    .mobile-version {
+        display: none;
+    }
+    }
+
+    @media (max-width: 767px) {
+        .desktop-version {
+            display: none;
+        }
+        .mobile-version {
+            display: block;
+        }
+    }
+
+</style>

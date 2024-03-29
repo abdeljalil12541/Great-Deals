@@ -183,7 +183,7 @@ def activate(request, uidb64, token):
 @login_required(login_url='login')
 def dashboard(request):
     current_count = CashOnDelivery.objects.filter(user=request.user).count()
-    current_count += 1
+    # current_count += 1
     orders       = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True)
     orders_count = orders.count()
     orders_count += current_count
