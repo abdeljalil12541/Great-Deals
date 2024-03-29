@@ -28,8 +28,9 @@ SECRET_KEY = 'ivl=vk)y0zu2tl@e2y)afe58#52wzfza06#8t3t-xn6d0++@-q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-ALLOWED_HOSTS = ['*']  # Allow all hosts for now, adjust as needed in production
 
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']  # Allow all hosts for now, adjust as needed in production
 
 
 # Application definition
@@ -104,17 +105,6 @@ else:
 
 # Configure the default database using dj_database_url
 DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
-
-
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': 'postgres',
-    #     'USER': 'postgres',
-    #     'PASSWORD': 'admin',
-    #     'HOST': '127.0.0.1',  # Replace with the hostname or IP address of your PostgreSQL server
-    #     'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
-    # }
-
 
 
 # Password validation
