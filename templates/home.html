@@ -45,7 +45,7 @@
 
 
 
-<div class="row">
+<!--<div class="row">
 	{% comment %} |slice:'4' {% endcomment %}
 	{% for product in products %}
 	<div class="col-md-3">
@@ -53,7 +53,7 @@
 			<a href="{{product.get_url}}" class="img-wrap"> <img src="{{product.image.url}}" style="padding-top: 5px"> </a>
 			<figcaption class="info-wrap">
 				<a href="{{product.get_url}}" class="title">{{product.product_name}}</a>
-				<div class="price mt-1">${{product.price}}</div> <!-- price-wrap.// -->
+				<div class="price mt-1">${{product.price}}</div>  price-wrap.// 
 				<div class="text" style="padding-bottom: 8px;">
 					<i style="color: #ffb503; font-size: 19px;" class="fa fa-star{% if product.averageReview < 0.5 %}-o{% elif product.averageReview >= 0.5 and product.averageReview < 1 %}-half-o {% endif %}" aria-hidden="true"></i>
 					<i style="color: #ffb503; font-size: 19px;" class="fa fa-star{% if product.averageReview < 1.5 %}-o{% elif product.averageReview >= 1.5 and product.averageReview < 2 %}-half-o {% endif %}" aria-hidden="true"></i>
@@ -64,9 +64,9 @@
 				</div>
 			</figcaption>
 		</div>
-	</div> <!-- col.// -->
+	</div>  col.// 
 	{% endfor %}
-</div> <!-- row.// -->
+</div>  row.// -->
 
 </div><!-- container // -->
 </section>
