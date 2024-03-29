@@ -143,7 +143,7 @@ def login(request):
             except:
                 return redirect('dashboard')
         else:
-            messages.error(request, "invalid login credentials")
+            messages.error(request, "Please activate your email")
             return redirect('login')
     return render(request, 'accounts/login.html')
 
