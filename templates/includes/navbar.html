@@ -115,6 +115,10 @@
             <a class="navbar-brand" href="{% url 'home' %}">
                 <img class="logo" src="{% static './images/logo.png' %}">
             </a>
+            <a href="{% url 'cart' %}" class="nav-link ml-5" style="margin: 0; padding: 0;">
+                <i class="fa fa-shopping-cart" style="font-size: 28px"></i>
+            </a>
+                <span class="badge  rounded-circle badge-danger mb-3" style="font-size: 10px; padding-bottom: 3px; padding-right: 3px; margin-left: 0">{{cart_count}}</span> <!-- add class 'notify' if there is some issue -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -122,16 +126,25 @@
             <div class="collapse navbar-collapse" id="navbarTop4">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdown" role="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Language
+                        <a class="nav-link dropdown-toggle" style="cursor: pointer;" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Language
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item bg-white" id="google_translate_element"
-                                onclick="event.stopPropagation();"></a>
-                            <!-- Add more options here -->
+                          <a class="dropdown-item bg-white" id="google_translate_element" onclick="event.stopPropagation();"></a>
+                          <!-- Add more options here -->
                         </div>
-                    </li>
+                      </li>
+                 <div id="google_translate_element"></div> 
+                 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+                
+                 <script>
+                     function googleTranslateElementInit(){
+                        new google.translate.TranslateElement(
+                            {pageLanguage: 'en'},
+                            'google_translate_element'
+                            );
+                        };
+                 </script>
                     <li class="nav-item dropdown">
                         <a class="nav-link" style="color: gray; cursor: default;"> USD </a>
                     </li>
@@ -155,8 +168,8 @@
                     </li>
                     <li class="nav-item">
                         <a href="{% url 'cart' %}" class="nav-link">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span class="badge badge-pill badge-danger notify">{{cart_count}}</span>
+                            <i class="fa fa-shopping-cart fa-lg"></i>
+                            <span class="badge badge-sm badge-pill badge-danger">{{cart_count}}</span> <!-- add class 'notify' if there is some issue -->
                         </a>
                     </li>
                 </ul>
@@ -164,12 +177,13 @@
         </div>
     </nav>
 
+
     <section class="header-main border-bottom">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 col-lg-3 col-xl-2">
+      <ul class="row" style="margin-bottom: 0">
+        <li class="col-2 mr-5" style="display: inline-block;">
+          <div class="col-md-6 col-lg-3 col-xl-2">
                 <div class="category-wrap dropdown d-inline-block">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="col-9 mr-5 btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bars"></i> All category
                     </button>
                     <div class="dropdown-menu">
@@ -180,12 +194,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-9 col-xl-10">
+        </li>
+        <li class="col-7 ml-5" style="display: inline-block;">
+          <div class="col-md-6 col-lg-9 col-xl-10">
                 <div class="row">
-                    <div class="col-7">
-                        <form action="{% url 'search' %}" class="form-inline my-2 my-lg-0 mr-2">
+                    <div class="col-12">
+                        <form action="{% url 'search' %}" class="form-inline">
                             <div class="input-group">
-                                <input required class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="keyword">
+                                <input required class="form-control" type="search" placeholder="Search" aria-label="Search" name="keyword">
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-primary" type="submit">
                                         <i class="fa fa-search"></i>
@@ -196,9 +212,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
+        </li>
+      </ul>
+    </section>
 
 </header>
 

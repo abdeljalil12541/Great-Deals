@@ -62,7 +62,7 @@ MIDDLEWARE = [
     'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
-SESSION_EXPIRE_SECONDS = 21428 # 3600 : 1 hour
+SESSION_EXPIRE_SECONDS = 21845428 # 3600 : 1 hour
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
 SESSION_TIMEOUT_REDIRECT = 'accounts/login/'
 
@@ -104,6 +104,11 @@ DATABASES = {
         'HOST': 'c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',  # Replace with the hostname or IP address of your PostgreSQL server
         'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
     }
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',  # Adjust path if needed
+    # }
 }
 
 
