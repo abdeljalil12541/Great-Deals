@@ -11,7 +11,7 @@ def home(request):
 
     context = {
         'products': products,
-        # 'reviews': reviews,
+        'reviews': reviews,
         'banners': banners,
     }
 
