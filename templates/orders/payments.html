@@ -34,10 +34,12 @@
                     <h5 class="card-header">Payment Method</h5>
                     <div class="card-body">
                         <p class="card-text">Paypal</p>
+                        <p class="card-text">Carte Bancaire</p>
+                        <p class="card-text">Cash On Delivery</p>
 
                     </div>
                 </div><!-- card.// -->
-                <div class="card" style="margin-top: 5px;">
+                <div class="card mb-1" style="margin-top: 5px;">
                     <h5 class="card-header">Review Products</h5>
                     <div class="card-body">
                         <table class="table table-borderless table-shopping-cart">
@@ -131,105 +133,127 @@
 
 
         <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px;">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Method: <span>Cash On Delivery</span></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div id="modalBody" class="modal-body">
-        
-        <div class="row">
-            <!-- card.// -->
-        <div class="card col-6" style="margin-top: 5px; margin-left: 25px">
-          <h5 class="card-header">Review Products</h5>
-          <div class="card-body">
-            <table class="table table-borderless table-shopping-cart">
-              <thead class="text-muted">
-                <tr class="small text-uppercase">
-                  <th scope="col">Product</th>
-                  <th scope="col" width="80">Quantity</th>
-                  <th scope="col" width="80">Price</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Loop through cart items -->
-                {% for cart_item in cart_items %}
-                <tr>
-                  <td>
-                    <figure class="itemside align-items-center">
-                      <div class="aside"><img src="{{ cart_item.product.image.url }}" class="img-sm"></div>
-                      <figcaption class="info">
-                        <a href="{{ cart_item.product.get_url }}" class="title text-dark">{{ cart_item.product.product_name }}</a>
-                        <p class="text-muted small">
-                          {% if cart_item.variations.all %}
-                            {% for item in cart_item.variations.all %}
-                              {{ item.variation_category | capfirst }} : {{ item.variation_value | capfirst }} <br>
-                            {% endfor %}
-                          {% endif %}
-                        </p>
-                      </figcaption>
-                    </figure>
-                  </td>
-                  <td>
-                    <label for="">{{ cart_item.quantity }}</label>
-                  </td>
-                  <td>
-                    <div class="price-wrap">
-                      <var class="price">${{ cart_item.sub_total }}</var>
-                      <small class="text-muted"> ${{ cart_item.product.price }} each </small>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="max-width: 1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Method: <span>Cash On Delivery</span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div id="modalBody" class="modal-body justify-content-center">
+
+                <div class="row">
+                    <!-- Review Products -->
+                    <div class="card col-lg-6 col-11 mb-1 desktop-card" style="margin-top: 5px;">
+                        <h5 class="card-header">Review Products</h5>
+                        <div class="card-body">
+                            <table class="table table-borderless table-shopping-cart">
+                                <thead class="text-muted">
+                                    <tr class="small text-uppercase">
+                                        <th scope="col">Product</th>
+                                        <th scope="col" width="80">Quantity</th>
+                                        <th scope="col" width="80">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Loop through cart items -->
+                                    {% for cart_item in cart_items %}
+                                    <tr>
+                                        <td>
+                                            <figure class="itemside align-items-center">
+                                                <div class="aside"><img src="{{ cart_item.product.image.url }}"
+                                                        class="img-sm"></div>
+                                                <figcaption class="info">
+                                                    <a href="{{ cart_item.product.get_url }}"
+                                                        class="title text-dark">{{ cart_item.product.product_name }}</a>
+                                                    <p class="text-muted small">
+                                                        {% if cart_item.variations.all %}
+                                                        {% for item in cart_item.variations.all %}
+                                                        {{ item.variation_category | capfirst }} :
+                                                        {{ item.variation_value | capfirst }} <br>
+                                                        {% endfor %}
+                                                        {% endif %}
+                                                    </p>
+                                                </figcaption>
+                                            </figure>
+                                        </td>
+                                        <td>
+                                            <label for="">{{ cart_item.quantity }}</label>
+                                        </td>
+                                        <td>
+                                            <div class="price-wrap">
+                                                <var class="price">${{ cart_item.sub_total }}</var>
+                                                <small class="text-muted"> ${{ cart_item.product.price }} each </small>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    <!-- End loop -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                  </td>
-                </tr>
-                {% endfor %}
-                <!-- End loop -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <!-- end card.// -->
+                    <!-- End Review Products -->
 
+                    <!-- Billing Address -->
+                    <div class="card col-lg-5 col-11 mt-1 desktop-card">
+                        <h5 class="card-header">Billing Address</h5>
+                        <div class="card-body">
 
-        <!-- card.// -->
-        <div class="card col-5" style="margin-left: 25px">
-                    <h5 class="card-header">Billing Address</h5>
-                    <div class="card-body">
+                            <p class="card-text mb-0" id="fullName">{{order.full_name}}</p>
+                            <p class="card-text mb-0" id="fullAddress">{{order.full_address}}</p>
+                            <p class="card-text mb-0" id="cityState">{{order.city}}, {{order.state}}</p>
+                            <p class="card-text mb-0" id="country">{{order.country}}</p>
+                            <p class="card-text mb-0" id="email">{{order.email}}</p>
+                            <p class="card-text mb-0" id="phone">{{order.phone}}</p>
+                            {% if order.order_note %}
+                            <b>Order Note:</b> <span id="orderNote">{{order.order_note}}</span>
+                            {% endif %}
 
-                        <p class="card-text mb-0" id="fullName">{{order.full_name}}</p>
-                        <p class="card-text mb-0" id="fullAddress">{{order.full_address}}</p>
-                        <p class="card-text mb-0" id="cityState">{{order.city}}, {{order.state}}</p>
-                        <p class="card-text mb-0" id="country">{{order.country}}</p>
-                        <p class="card-text mb-0" id="email">{{order.email}}</p>
-                        <p class="card-text mb-0" id="phone">{{order.phone}}</p>
-                        {% if order.order_note %}
-                        <b>Order Note:</b> <span id="orderNote">{{order.order_note}}</span>
-                        {% endif %}
-
+                        </div>
                     </div>
-        </div>
-        <!-- end card.// -->
-        </div>
+                    <!-- End Billing Address -->
+                </div>
 
-      </div>
-      <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-          <div  id="loadingSpinner" class="loadingio-spinner-rolling-5nthc5f2rs2"><div class="ldio-gvme6qetmpv">
-          <div></div>
-          </div></div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal" id="CloseOrderBtn">Close</button>
-        <button type="button" class="btn btn-primary" id="confirmOrderBtn">Confirm Your Order</button>
-        <div class="center-container" id="successMark">
-          <!-- Checkmark -->
-          <div class="checkmark"></div>
+            </div>
+            <div style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                <div id="loadingSpinner" class="loadingio-spinner-rolling-5nthc5f2rs2">
+                    <div class="ldio-gvme6qetmpv">
+                        <div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="CloseOrderBtn">Close</button>
+                <button type="button" class="btn btn-primary" id="confirmOrderBtn">Confirm Your Order</button>
+                <div class="center-container" id="successMark">
+                    <!-- Checkmark -->
+                    <div class="checkmark"></div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
 </div>
+
+
+<style>
+    @media (min-width: 992px) {
+        /* For screens equal to or larger than desktop (992px and above) */
+        .desktop-card {
+            margin-left: 25px;
+        }
+    }
+    @media (max-width: 991px) {
+        /* For screens equal to or larger than desktop (992px and above) */
+        .desktop-card {
+            margin-left: 13px;
+        }
+    }
+</style>
 
 
 <style type="text/css">

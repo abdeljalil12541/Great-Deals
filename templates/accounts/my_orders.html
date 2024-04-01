@@ -16,7 +16,7 @@
                 
             </header>
             
-            <div class="card-body">
+            <div class="card-body" style="overflow-x: scroll;">
                 <div class="row">
                     <div class="col-md-12">
                         <table class="table table-hover">
@@ -53,7 +53,7 @@
                           </table>
                     </div>
                 </div> <!-- row.// -->
-                <hr>
+                <hr class="theHr">
                 <strong class="d-inline-block mr-3 mb-3">Cod Orders History</strong>
 
                 <table class="table table-hover">
@@ -98,5 +98,43 @@
     </section>
     <!-- ========================= SECTION CONTENT END// ========================= -->
     
+    <style>
+        
+        /* For screens smaller than desktop (992px and below) */
+@media (max-width: 991px) {
+    /* Set main container width to 100% */
+    main {
+        width: 100%;
+    }
+
+    .theHr{
+        display: none;
+    }
+
+    /* Remove padding on the left and right of the main container */
+    main.col-md-9 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    /* Adjust margin and padding of table headings */
+    .card-body table thead th {
+        padding-left: 10px;
+    }
+
+    /* Adjust padding-left for status cells */
+    .card-body table tbody td.text-warning,
+    .card-body table tbody td.text-success,
+    .card-body table tbody td.text-danger {
+        padding-left: 13px;
+    }
+
+    /* Adjust padding-left for table cells */
+    .card-body table tbody td {
+        padding-left: 10px;
+    }
+}
+
+    </style>
 
 {% endblock %}
