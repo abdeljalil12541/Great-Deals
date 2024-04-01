@@ -57,7 +57,16 @@
 
                       <div class="form-group">
                         <label for="exampleFormControlFile1">Example file input</label>
-                        {{form.profile_picture}}
+                        <!-- {{form.profile_picture}} -->
+                        <div class="input-group mb-3">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                          </div>
+                          <div class="custom-file">
+                            <input name="profile_picture" required type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                          </div>
+                        </div>
                       </div>
 
                     <div class="form-group">

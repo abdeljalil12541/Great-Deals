@@ -96,19 +96,19 @@ AUTH_USER_MODEL = 'accounts.account'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'd7pm1i5ksbnvif',
-        'USER': 'ueaqbgbdkcl5j4',
-        'PASSWORD': 'p7bea4aa97c0acdb3c131890e713c2895ca433c15c0d29a2076c9f18751146e0f',
-        'HOST': 'c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',  # Replace with the hostname or IP address of your PostgreSQL server
-        'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
-    }
-
     # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',  # Adjust path if needed
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'd7pm1i5ksbnvif',
+    #     'USER': 'ueaqbgbdkcl5j4',
+    #     'PASSWORD': 'p7bea4aa97c0acdb3c131890e713c2895ca433c15c0d29a2076c9f18751146e0f',
+    #     'HOST': 'c7gljno857ucsl.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com',  # Replace with the hostname or IP address of your PostgreSQL server
+    #     'PORT': '5432',  # This is optional if your PostgreSQL server is running on the default port
     # }
+
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',  # Adjust path if needed
+    }
 }
 
 
