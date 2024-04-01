@@ -172,6 +172,8 @@
     </nav>
 
 
+    {% if not request.path == '/' and not request.path == '/store/' %}
+    {% else %}
     <section class="header-main border-bottom">
       <ul class="row" style="margin-bottom: 0">
         <li class="col-2 mr-5" style="display: inline-block;">
@@ -193,6 +195,7 @@
           <div class="col-md-6 col-lg-9 col-xl-10">
                 <div class="row">
                     <div class="col-12">
+                        
                         <form action="{% url 'search' %}" class="form-inline">
                             <div class="input-group">
                                 <input required class="form-control" type="search" placeholder="Search" aria-label="Search" name="keyword">
@@ -209,7 +212,7 @@
         </li>
       </ul>
     </section>
-
+    {% endif %}
 </header>
 
 <style>
