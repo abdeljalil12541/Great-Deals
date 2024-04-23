@@ -118,7 +118,7 @@
             <a href="{% url 'cart' %}" class="nav-link ml-5" style="margin: 0; padding: 0;">
                 <i class="fa fa-shopping-cart" style="font-size: 28px"></i>
             </a>
-                <span class="badge rounded-circle badge-danger mb-3" style="font-size: 10px; padding-bottom: 3px; padding-right: 5px; margin-left: 0">{{cart_count}}</span> <!-- add class 'notify' if there is some issue -->
+            <span class="badge rounded-circle badge-danger mb-3" style="font-size: 10px; padding-bottom: 3px; padding-right: 5px; margin-left: 0">{{cart_count}}</span> <!-- add class 'notify' if there is some issue -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTop4"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -127,7 +127,7 @@
                 <ul class="navbar-nav ml-md-auto">
                     <li class="nav-item">
                         {% if user.id is None %}
-                        <a class=" text-primarynav-link" href="{% url 'login' %}">Sign in</a>
+                        <a class="nav-link" href="{% url 'login' %}">Sign in</a>
                         {% else %}
                         <div class="dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown"
@@ -150,11 +150,11 @@
     {% if not request.path == '/' and not request.path == '/store/' %}
     {% else %}
     <section class="header-main border-bottom">
-      <ul class="row" style="margin-bottom: 0">
+        <ul class="row" style="margin-bottom: 0">
         <li class="col-2 mr-5" style="display: inline-block;">
-          <div class="col-md-6 col-lg-3 col-xl-2">
+            <div class="col-md-6 col-lg-3 col-xl-2">
                 <div class="category-wrap dropdown d-inline-block">
-                    <button type="button" class="col-9 mr-5 btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bars"></i> All category
                     </button>
                     <div class="dropdown-menu">
@@ -188,6 +188,10 @@
       </ul>
     </section>
     {% endif %}
+        </div>
+    </div>
+</section>
+
 </header>
 
 <style>
@@ -209,4 +213,5 @@
         }
     }
 
+</style>
 </style>
